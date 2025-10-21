@@ -3,6 +3,58 @@ import 'macro-css'
 
 function App() {
   return (
+    <>
+    <div className="overlay">
+      <div className="drawer">
+        <h2 className='mb-30 d-flex justify-between'>Cart <img className='cu-p' src="/img/btn-remove.svg" alt="Remove" /></h2>
+
+        <div className="items">
+          <div className="cartItem d-flex align-center mb-20">
+            <div style={{ backgroundImage: "url(/img/sneakers/1.jpg)" }} className="cartItemImg"></div>
+            <div className='mr-20 flex'>
+              <p className='mb-5'>Male Sneakers Nike Blazer Mid</p>
+              <b>200 $</b>
+            </div>
+              <img className='removeBtn' src="/img/btn-remove.svg" alt="Remove" />
+          </div>
+          <div className="cartItem d-flex align-center mb-20">
+            <div style={{ backgroundImage: "url(/img/sneakers/2.jpg)" }} className="cartItemImg"></div>
+            <div className='mr-20 flex'>
+              <p className='mb-5'>Male Sneakers Nike Blazer Mid</p>
+              <b>200 $</b>
+              </div>
+              <img className='removeBtn' src="/img/btn-remove.svg" alt="Remove" />
+          </div>
+          <div className="cartItem d-flex align-center mb-20">
+            <div style={{ backgroundImage: "url(/img/sneakers/3.jpg)" }} className="cartItemImg"></div>
+            <div className='mr-20 flex'>
+              <p className='mb-5'>Male Sneakers Nike Blazer Mid</p>
+              <b>200 $</b>
+              </div>
+              <img className='removeBtn' src="/img/btn-remove.svg" alt="Remove" />
+          </div>
+        </div>
+
+        <div className="cartTotalBlock">
+          <ul>
+            <li className='d-flex'>
+              <span>Total:</span>
+              <div></div>
+              <b>500 $</b>
+            </li>
+            <li className='d-flex'>
+              <span>Tax 5%:</span>
+              <div></div>
+              <b>2.5 $</b>
+            </li>
+          </ul>
+          <button className='greenButton'>
+            Create Order <img src="/img/arrow.svg" alt="Arrow" />
+          </button>
+        </div>
+        
+      </div>
+    </div>
     <div className='wrapper clear'>
       <header className='d-flex justify-between align-center p-40'>
         <div className='d-flex align-center'>
@@ -34,6 +86,9 @@ function App() {
         
         <div className="d-flex">
           <div className="card">
+            <div className="favourite">
+              <img src="/img/unliked.svg" alt="Unliked" />
+            </div>
             <img width={133} height={112} src="/img/sneakers/1.jpg" alt="Snealers" />
             <h5>Male Sneakers Nike Blazer Mid</h5>
             <div className='d-flex justify-between align-center'>
@@ -89,6 +144,7 @@ function App() {
 
       </div>
     </div>
+    </>
   )
 }
 
