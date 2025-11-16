@@ -17,9 +17,7 @@ function App() {
   const [cartOpened, setCartOpened] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(true);
-
-  const isPosting = React.useRef(false);
-  const isDeleting = React.useRef(false);
+  const [isOrderComplete, setIsOrderComplete] = React.useState(false)
 
   const [cartItems, setCartItems] = React.useState(() => {
     // Restore from localStorage when the component mounts
@@ -56,11 +54,7 @@ function App() {
   const onAddToCart = async (obj) => {
     setCartItems(prev => {
       const alreadyInCart = prev.some(item => item.item_id === obj.item_id);
-      if (alreadyInCart) {
-        isPosting.current = false;
-        return prev;
-      }
-      return [...prev, obj];
+      return alreadyInCart ? prev : [...prev, obj]
     });
   };
 
@@ -86,28 +80,41 @@ function App() {
     });
   }
 
-  const OnOrder = () => {
+  const OnOrder = async () => {
+    await axios.post(
+      "https://68fb36f194ec960660251678.mockapi.io/api/v1/orders", 
+      {order: cartItems}
+    )
     setCartItems([])
+    setIsOrderComplete(true)
   }
 
   const onClickCart = () => {
     setCartOpened(true)
   }
 
+  const onCloseCart = () => {
+    setCartOpened(false)
+    setIsOrderComplete(false)
+  }
+
   const contextValue = {
     items,
     cartItems,
     favouriteItems,
+    searchValue,
+    isLoading,
+    isOrderComplete,
     onToggleFavourite,
     onAddToCart,
     onDeleteFromCart,
-    searchValue,
     setSearchValue,
-    isLoading,
     onChangeSearchInput,
     onDeleteSearchInput,
     onClickCart,
-    OnOrder
+    OnOrder,
+    onCloseCart,
+    
   }
   
 
@@ -116,7 +123,7 @@ function App() {
       <>
       {cartOpened && (
         <div className="overlay">
-          <Drawer onCloseCart={() => setCartOpened(false)}  />
+          <Drawer />
         </div>
       )}
 
@@ -127,8 +134,7 @@ function App() {
           <Route path="/" exact element={
             <Home />
           } />
-        </Routes>
-        <Routes>
+
           <Route path="/favourites" exact element={
             <Favourites />
           } />

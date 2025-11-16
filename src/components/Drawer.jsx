@@ -2,9 +2,11 @@ import React from "react"
 
 import AppContext from '../context'
 
+import Info from "./Info";
 
-function Drawer({ OnOrder, onCloseCart }) {
-    const { cartItems, onDeleteFromCart } = React.useContext(AppContext)
+
+function Drawer() {
+    const { cartItems, onDeleteFromCart, OnOrder, onCloseCart, isOrderComplete } = React.useContext(AppContext)
 
     let itemsTotal = 0;
     let taxTotal = 0;
@@ -52,15 +54,10 @@ function Drawer({ OnOrder, onCloseCart }) {
                     </div>
                     </>
                 ) : (
-                    <div className="cartEmpty d-flex align-center justify-center flex-column flex">
-                        <img className="mb-20" width="120px" src="/img/empty-cart.jpg" alt="Empty" />
-                        <h2>Cart is empty</h2>
-                        <p className="opacity-6">Add at least one item to order</p>
-                        <button onClick={onCloseCart} className="greenButton">
-                            <img src="img/arrow.svg" alt="Arrow" />
-                            Return
-                        </button>
-                    </div>
+                    <Info 
+                    title={isOrderComplete ? "Order is confirmed" : "Cart is empty"}
+                    description={isOrderComplete ? "Your order will be delivered soon!" : "Add at least one item to order" }
+                    image={isOrderComplete ? "/img/complete-order.jpg" : "/img/empty-cart.jpg"} />
                 )
             }            
         </div>
