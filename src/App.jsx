@@ -3,6 +3,7 @@ import './App.scss'
 import React from 'react'
 import axios from 'axios'
 import { Routes, Route } from 'react-router-dom'
+import { HashRouter as Router } from 'react-router-dom'
 import 'macro-css'
 
 import Header from './components/Header'
@@ -156,15 +157,15 @@ function App() {
         <Header />
 
         <Routes>
-          <Route path="" exact element={
+          <Route path="/" exact element={
             <Home />
           } />
 
-          <Route path="favourites" exact element={
+          <Route path="/favourites" exact element={
             <Favourites />
           } />
 
-          <Route path="orders" exact element={
+          <Route path="/orders" exact element={
             <Orders />
           } />
         </Routes>
