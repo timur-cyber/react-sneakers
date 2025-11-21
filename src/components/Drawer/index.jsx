@@ -19,7 +19,7 @@ function Drawer() {
         ${isClosing ? styles.overlayClosing : ''}
         `}>
             <div className={styles.drawer}>
-                <h2 className='mb-30 d-flex justify-between'>Cart <img className='cu-p' src="/img/btn-remove.svg" alt="Remove" onClick={onCloseCart} /></h2>
+                <h2 className='mb-30 d-flex justify-between'>Cart <img className='cu-p' src="img/btn-remove.svg" alt="Remove" onClick={onCloseCart} /></h2>
 
                 {
                     cartItems.length > 0 ? (
@@ -32,7 +32,7 @@ function Drawer() {
                                     <p className='mb-5'>{obj.title}</p>
                                     <b>{obj.price} $</b>
                                     </div>
-                                    <img onClick={() => onDeleteFromCart(obj)} className={styles.removeBtn} src="/img/btn-remove.svg" alt="Remove" />
+                                    <img onClick={() => onDeleteFromCart(obj)} className={styles.removeBtn} src="img/btn-remove.svg" alt="Remove" />
                                 </div>
                             ))}  
                         </div>
@@ -51,7 +51,7 @@ function Drawer() {
                                 </li>
                             </ul>
                             <button onClick={() => OnOrder()} className="greenButton">
-                                Create Order <img src="/img/arrow.svg" alt="Arrow" />
+                                Create Order <img src="img/arrow.svg" alt="Arrow" />
                             </button>
                         </div>
                         </>
@@ -59,7 +59,7 @@ function Drawer() {
                         <Info 
                         title={isOrderComplete ? "Order is confirmed" : "Cart is empty"}
                         description={isOrderComplete ? "Your order will be delivered soon!" : "Add at least one item to order" }
-                        image={isOrderComplete ? "/img/complete-order.jpg" : "/img/empty-cart.jpg"} />
+                        image={isOrderComplete ? "img/complete-order.jpg" : "img/empty-cart.jpg"} />
                     )
                 }            
             </div>

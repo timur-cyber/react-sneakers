@@ -27,7 +27,7 @@ function Card({ title, price, imageUrl, onClickFavourite, onPlus, added, favouri
                 </ContentLoader> : (
                     <>
                     <div className={styles.favourite} onClick={onClickFavourite}>
-                        {order ? null : <img src={favourite ? "/img/liked.svg" : "/img/unliked.svg"} alt="Favourite" />}
+                        {order ? null : <img src={favourite ? "img/liked.svg" : "img/unliked.svg"} alt="Favourite" />}
                     </div>
                     <img width={133} height={112} src={imageUrl} alt="Sneakers" />
                     <h5>{title}</h5>
@@ -36,7 +36,7 @@ function Card({ title, price, imageUrl, onClickFavourite, onPlus, added, favouri
                             <span>Price: </span>
                             <b>{price} $</b>
                         </div>
-                        {order ? null : <img className='cu-p' onClick={onClickPlus}  src={added ? "/img/btn-checked.svg" : "/img/btn-plus.svg"} alt="Plus" />}
+                        {order ? null : <img className='cu-p' onClick={onClickPlus}  src={added ? "img/btn-checked.svg" : "img/btn-plus.svg"} alt="Plus" />}
                     </div>
                     </>
                 )

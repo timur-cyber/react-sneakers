@@ -38,8 +38,8 @@ function Home() {
             <div className="mb-40 d-flex align-center justify-between">
                 <h1>{searchValue ? `Search by: ${searchValue}` : "All Items"}</h1>
                 <div className="search-block d-flex">
-                    <img src="/img/search.svg" alt="Search" />
-                    <img onClick={onDeleteSearchInput} className='cu-p clear' src="/img/btn-remove.svg" alt="Remove" />
+                    <img src="img/search.svg" alt="Search" />
+                    <img onClick={onDeleteSearchInput} className='cu-p clear' src="img/btn-remove.svg" alt="Remove" />
                     <input 
                     onChange={onChangeSearchInput} 
                     value={searchValue} 
