@@ -15,7 +15,7 @@ function Favourites() {
             <div className="d-flex flex-wrap">
                 {favouriteItems.map((item) => (
                 <Card
-                    key={item.id}
+                    key={item.item_id}
                     title={item.title} 
                     price={item.price} 
                     imageUrl={item.imageUrl}

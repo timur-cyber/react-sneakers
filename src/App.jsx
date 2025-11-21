@@ -9,19 +9,22 @@ import Header from './components/Header'
 import Drawer from './components/Drawer'
 import Home from './pages/Home'
 import Favourites from './pages/Favourites'
+import Orders from './pages/Orders'
 import AppContext from "./context"
 
 
 function App() {
   const [items, setItems] = React.useState([]);
   const [cartOpened, setCartOpened] = React.useState(false);
+  const [isClosing, setIsClosing] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(true);
   const [isOrderComplete, setIsOrderComplete] = React.useState(false)
+  const [totalCartSum, setTotalCartSum] = React.useState(0)
 
   const [cartItems, setCartItems] = React.useState(() => {
     // Restore from localStorage when the component mounts
-    const saved = localStorage.getItem('cartItems');
+    const saved = localStorage.getItem('cart');
     return saved ? JSON.parse(saved) : [];
   });
   const [favouriteItems, setFavouriteItems] = React.useState(() => {
@@ -29,13 +32,24 @@ function App() {
     const saved = localStorage.getItem('favourites');
     return saved ? JSON.parse(saved) : [];
   });
+  const [orderItems, setOrderItems] = React.useState(() => {
+    // Restore from localStorage when the component mounts
+    const saved = localStorage.getItem('orders');
+    return saved ? JSON.parse(saved) : [];
+  });
 
 
   React.useEffect(() => {
     async function fetchData() {
-      const itemsResponse = await axios.get("https://68fb36f194ec960660251678.mockapi.io/api/v1/sneakers")
-      setIsLoading(false)
-      setItems(itemsResponse.data)
+      try {
+        const itemsResponse = await axios.get("https://68fb36f194ec960660251678.mockapi.io/api/v1/sneakers")
+        setIsLoading(false)
+        setItems(itemsResponse.data)
+      } catch (error) {
+        alert("Error while fetching data ;(")
+        console.log(error)
+      }
+      
     }
 
     fetchData()
@@ -44,12 +58,18 @@ function App() {
   React.useEffect(() => {
     // Save whenever cartItems changes
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    setTotalCartSum(cartItems.reduce((sum, item) => sum + item.price, 0))
   }, [cartItems]);
 
   React.useEffect(() => {
     // Save whenever favourites changes
     localStorage.setItem('favourites', JSON.stringify(favouriteItems));
   }, [favouriteItems]);
+
+  React.useEffect(() => {
+    // Save whenever favourites changes
+    localStorage.setItem('orders', JSON.stringify(orderItems));
+  }, [orderItems]);
 
   const onAddToCart = async (obj) => {
     setCartItems(prev => {
@@ -81,10 +101,12 @@ function App() {
   }
 
   const OnOrder = async () => {
-    await axios.post(
-      "https://68fb36f194ec960660251678.mockapi.io/api/v1/orders", 
-      {order: cartItems}
-    )
+    const ind = orderItems.length + 1
+    const orderPayload = {
+      id: ind,
+      order: cartItems
+    }
+    setOrderItems([...orderItems, orderPayload])
     setCartItems([])
     setIsOrderComplete(true)
   }
@@ -94,9 +116,13 @@ function App() {
   }
 
   const onCloseCart = () => {
-    setCartOpened(false)
-    setIsOrderComplete(false)
-  }
+    setIsClosing(true);
+
+    setTimeout(() => {
+      setCartOpened(false);
+      setIsClosing(false);
+    }, 100); // must match .drawer transition time
+  };
 
   const contextValue = {
     items,
@@ -105,6 +131,10 @@ function App() {
     searchValue,
     isLoading,
     isOrderComplete,
+    totalCartSum,
+    orderItems,
+    cartOpened,
+    isClosing,
     onToggleFavourite,
     onAddToCart,
     onDeleteFromCart,
@@ -113,19 +143,14 @@ function App() {
     onDeleteSearchInput,
     onClickCart,
     OnOrder,
-    onCloseCart,
-    
+    onCloseCart
   }
   
 
   return (
     <AppContext.Provider value={contextValue}>
       <>
-      {cartOpened && (
-        <div className="overlay">
-          <Drawer />
-        </div>
-      )}
+      <Drawer />
 
       <div className='wrapper clear'>
         <Header />
@@ -137,6 +162,10 @@ function App() {
 
           <Route path="/favourites" exact element={
             <Favourites />
+          } />
+
+          <Route path="/orders" exact element={
+            <Orders />
           } />
         </Routes>
       </div>

@@ -1,10 +1,12 @@
 import React from 'react';
-
 import { Link } from 'react-router-dom'
+
 import AppContext from '../context'
+import { useCart } from "../hooks/useCart"
 
 function Header() {
     const { onClickCart } = React.useContext(AppContext)
+    const { totalCartSum } = useCart()
 
     return (
         <header className='d-flex justify-between align-center p-40'>
@@ -20,7 +22,7 @@ function Header() {
             <ul className='d-flex'>
                 <li onClick={(onClickCart)} className='mr-30'>
                     <img width={18} height={18} src="/img/cart.svg" alt="Cart" />
-                    <span>120 $</span>
+                    <span>{totalCartSum} $</span>
                 </li>
                 <li>
                     <Link to="/favourites">
@@ -28,7 +30,9 @@ function Header() {
                     </Link>
                 </li>
                 <li>
-                    <img width={18} height={18} src="/img/user.svg" alt="User" />
+                    <Link to="/orders">
+                        <img width={18} height={18} src="/img/user.svg" alt="User" />
+                    </Link>
                 </li>
             </ul>
         </header>
